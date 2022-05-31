@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="https://www.olern.com/wp-content/uploads/2020/01/stencil.blog-post-image-1.jpg">
+        </div>
+        <div class="form">
+            <h2>
+                student registration form
+            </h2>
+            <form action="/" method="post">
+                <div class="top-row">
+                    <div class="field-wrap">
+                        <input type="text" id="firstName" placeholder="First Name" required autocomplete="off" />
+                    </div>
+
+                    <div class="field-wrap">
+                        <input type="text" id="lastName" placeholder="Last Name" required autocomplete="off" />
+                    </div>
+                </div>
+
+                <div class="field-wrap">
+                    <input type="text" id="address" required autocomplete="off" placeholder="Address" />
+                </div>
+
+                <div class="radio-wrap">
+                    <span>Gender: </span>
+                    <input type="radio" id="male" required name="gender" onclick="handleClick(this);" value="male">
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" required name="gender" onclick="handleClick(this);" value="female">
+                    <label for="female">Female</label>
+                    <input type="radio" id="other" required name="gender" onclick="handleClick(this);" value="other">
+                    <label for="other">Other</label>
+                </div>
+
+                <div class="top-row">
+                    <div class="field-wrap">
+                        <select name="" id="state">
+
+                            <option value="">State</option>
+                            <option value="Jordan">Jordan</option>
+                            <option value="Turkey">Turkey</option>
+                            <option value="Saudi">Saudi Arabia</option>
+                        </select>
+
+                    </div>
+
+                    <div class="field-wrap">
+                        <select name="" id="city">
+                            <option value="">City</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field-wrap">
+                    <input type="number" id="pincode" required autocomplete="off" placeholder="Pincode" />
+                </div>
+
+                <div class="field-wrap">
+                    <input type="text" id="courses" required autocomplete="off" placeholder="Courses" />
+                </div>
+
+                <div class="field-wrap">
+                    <input type="email" id="email" required autocomplete="off" placeholder="Email ID" />
+                </div>
+
+                <div class="button-container">
+                    <button class="orange" type="submit">Submit Form</button>
+                    <button class="white" type="reset">Reset All</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    let stateSelect = document.getElementById("state");
+    let citySelect = document.getElementById("city");
+
+
+    let citiesBasedOnState = {
+        'Jordan': ['Amman', 'Zarqa', 'Madaba'],
+        'Turkey': ['Istanbul', 'Antalya', 'Ankara'],
+        'Saudi': ['Riyadh', 'Jeddah', 'Medina']
+    }
+
+    let selectedState
+    let selectedCity
+    let gender;
+
+
+    function handleClick(myRadio) {
+        gender = myRadio.value;
+    }
+
+    stateSelect.addEventListener('change', function () {
+        selectedState = stateSelect.value;
+        citySelect.innerHTML = '';
+        citiesBasedOnState[selectedState].forEach(function (city) {
+            let option = document.createElement('option');
+            option.value = city;
+            option.innerHTML = city;
+            citySelect.appendChild(option);
+        })
+    })
+
+    citySelect.addEventListener('change', function () {
+        selectedCity = citySelect.value;
+    })
+
+    let form = document.querySelector('form');
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        let firstName = document.getElementById('firstName').value;
+        let lastName = document.getElementById('lastName').value;
+        let address = document.getElementById('address').value;
+        let pincode = document.getElementById('pincode').value;
+        let courses = document.getElementById('courses').value;
+        let email = document.getElementById('email').value;
+
+        const data = {
+            firstName,
+            lastName,
+            address,
+            pincode,
+            courses,
+            email,
+            gender
+        }
+
+        localStorage.setItem("data", JSON.stringify(data))
+
+    })
+
+</script>
+
+</html>
